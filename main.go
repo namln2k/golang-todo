@@ -8,6 +8,7 @@ import (
 	"os"
 	"time"
 
+	v1Handler "example.com/northstar-lab/internal/api/v1/handler"
 	"github.com/gin-gonic/gin"
 	_ "github.com/lib/pq"
 )
@@ -49,7 +50,19 @@ func main() {
 		})
 	})
 
-	if err := r.Run(":8888"); err != nil {
+	apiV1 := r.Group("/api/v1")
+	{
+		todoHandlerV1 := v1Handler.NewTodoHandler()
+
+		apiV1.GET("/todos", todoHandlerV1.GetAll)
+	}
+
+	appPort := os.Getenv("APP_PORT")
+	if appPort == "" {
+		appPort = "8888"
+	}
+
+	if err := r.Run(fmt.Sprintf(":%s", appPort)); err != nil {
 		log.Fatalf("failed to run server: %v", err)
 	}
 }
