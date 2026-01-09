@@ -1,10 +1,11 @@
-module example.com/northstar-lab
+module example.com/golang-todo
 
 go 1.25.5
 
 require (
 	github.com/gin-gonic/gin v1.11.0
-	github.com/lib/pq v1.10.9
+	github.com/joho/godotenv v1.5.1
+	golang.org/x/time v0.14.0
 )
 
 require (
